@@ -6,8 +6,8 @@ grep.config(['$locationProvider', function($locationProvider) {
 }]);
 
 
-grep.controller('AppCtrl', ['$scope', '$location', '$base64', '$http',
-    function ($scope, $location, $base64, $http) {
+grep.controller('AppCtrl', ['$scope', '$location', '$base64', '$http', '$sce',
+    function ($scope, $location, $base64, $http, $sce) {
   var config = $location.search(),
       authz = $base64.encode(config.apiToken + ':x-auth-token'),
       docApi = config.server + '/api/v1/document-sets/' + config.documentSetId + '/documents';
@@ -16,11 +16,13 @@ grep.controller('AppCtrl', ['$scope', '$location', '$base64', '$http',
     running: false,
     message: null
   };
+  $scope.regexUrl = null;
 
   $scope.run = function() {
     if (!$scope.canSearch()) return;
     $scope.query.running = true;
     $scope.query.message = null;
+    $scope.regexUrl = [$sce.trustAsResourceUrl('http://jex.im/regulex/#!embed=true&flags=&re=' + encodeURIComponent($scope.query.regex))];
 
     var rex = new RegExp($scope.query.regex, 'i'),
         matches = [];

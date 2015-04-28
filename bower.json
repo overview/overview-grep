@@ -23,6 +23,8 @@
     "angular-bootstrap": "~0.12.0",
     "angular-truncate": "*",
     "ng-debounce": "~0.1.5",
-    "angular-loading-bar": "~0.7.1"
+    "angular-loading-bar": "~0.7.1",
+    "angular-base64": "~2.0.4",
+    "oboe": "*"
   }
 }

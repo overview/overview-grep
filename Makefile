@@ -1,6 +1,6 @@
 BOWER=node_modules/.bin/bower
 LESSC=node_modules/.bin/lessc
-UGLIFY=node_modules/.bin/uglify
+UGLIFY=node_modules/.bin/uglifyjs
 NODE=node
 NPM=npm
 BC=bower_components
@@ -16,17 +16,26 @@ install: node_modules bower_components
 serve: install
 	$(NODE) app.json
 
+clean:
+	rm public/deps.js
+	rm public/style.css
+
 clean-deps:
 	rm -rf node_modules
 	rm -rf bower_components
 
 public/deps.js: bower_components
-	$(UGLIFY) --screw-ie8 -c -o public/deps.js \
-		$(BC)/angular/angular.js
+	$(UGLIFY) \
+		$(BC)/oboe/dist/oboe-browser.js \
+		$(BC)/angular/angular.js \
+		$(BC)/angular-base64/angular-base64.js \
+		-o public/deps.js
+
+public/style.css: bower_components
+	$(LESSC) -x style/style.less public/style.css
 
 .PHONY: assets
-assets: public/deps.js
-	$(LESSC) -x style/style.less public/style.css
+assets: public/deps.js public/style.css
 
 watch:
 	watchr -e "watch('.*') { system 'make assets' }"

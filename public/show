@@ -6,8 +6,15 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div class="container" ng-controller="AppCtrl">
-      {{config.apiToken}} huhu
+    <div id="page" class="container-fluid" ng-controller="AppCtrl">
+      <form class="form-inline" ng-submit="run()">
+        <div class="form-group col-xs-8">
+          <input type="text" class="form-control" ng-model="query.regex"
+            placeholder="/bb|[^b]{2}/">
+        </div>
+        <button type="submit" class="btn btn-default"
+          ng-disabled="!validRegex()">Filter</button>
+      </form>
     </div>
     <script src="deps.js"></script>
     <script src="app.js"></script>

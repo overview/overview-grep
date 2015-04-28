@@ -19,6 +19,6 @@
     "express": "^4.12.3",
     "bower": "",
     "less": "",
-    "uglify": ""
+    "uglifyjs": ""
   }
 }

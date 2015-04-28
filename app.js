@@ -7,6 +7,8 @@ app.use(function(req, res, next) {
     res.set('Content-Type', 'text/html');
   }
   res.set('Access-Control-Allow-Origin', '*');
+  //res.set('Access-Control-Allow-Headers', '*');
+  //res.set('Access-Control-Allow-Credential', 'true');
   next();
 });
 

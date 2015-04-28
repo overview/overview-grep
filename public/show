@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="grep">
+  <head>
+    <meta charset="utf-8">
+    <title>Grep</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container" ng-controller="AppCtrl">
+      {{config.apiToken}} huhu
+    </div>
+    <script src="deps.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

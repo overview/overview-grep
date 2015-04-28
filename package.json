@@ -15,7 +15,7 @@
     "url": "https://github.com/pudo/overview-grep/issues"
   },
   "homepage": "https://github.com/pudo/overview-grep",
-  "devDependencies": {
+  "dependencies": {
     "express": "^4.12.3",
     "bower": "",
     "less": "",

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id="page" class="container-fluid" ng-controller="AppCtrl">
+    <div id="page" class="container-fluid" ng-controller="AppCtrl" ng-cloak>
       <form class="form-inline" ng-submit="run()">
         <div class="form-group col-xs-8">
           <input type="text" class="form-control" ng-model="query.regex"

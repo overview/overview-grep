@@ -26,9 +26,7 @@ clean-deps:
 
 public/deps.js: bower_components
 	$(UGLIFY) \
-		$(BC)/oboe/dist/oboe-browser.js \
 		$(BC)/angular/angular.js \
-		$(BC)/angular-base64/angular-base64.js \
 		-o public/deps.js
 
 public/style.css: bower_components

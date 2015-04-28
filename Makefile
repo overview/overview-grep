@@ -5,6 +5,8 @@ NODE=node
 NPM=npm
 BC=bower_components
 
+all: install clean assets
+
 node_modules:
 	$(NPM) install
 
@@ -13,32 +15,25 @@ bower_components:
 
 install: node_modules bower_components
 
-serve: install
-	$(NODE) app.json
-
 clean:
-	rm public/deps.js
-	rm public/style.css
+	rm -f public/script.js
+	rm -f public/style.css
 
 clean-deps:
 	rm -rf node_modules
 	rm -rf bower_components
 
-public/deps.js: bower_components
+public/script.js: bower_components
 	$(UGLIFY) \
 		$(BC)/angular/angular.js \
-		-o public/deps.js
+		public/app.js \
+		-o public/script.js
 
 public/style.css: bower_components
 	$(LESSC) -x style/style.less public/style.css
 
 .PHONY: assets
-assets: public/deps.js public/style.css
+assets: public/script.js public/style.css
 
 watch:
 	watchr -e "watch('.*') { system 'make assets' }"
-
-upload:
-	aws s3 sync --acl public-read --delete public/ s3://overview.pudo.org/grep/
-	aws s3 cp --acl public-read --content-type 'text/html' public/show s3://overview.pudo.org/grep/
-	aws s3 cp --acl public-read --content-type 'application/json' public/metadata s3://overview.pudo.org/grep/

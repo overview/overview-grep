@@ -3,18 +3,18 @@
   "version": "0.0.0",
   "description": "Grep documents within an Overview document set",
   "scripts": {
-    "start": "node app/main.js"
+    "start": "node serve.js"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/overviewproject/overview-multi-search.git"
+    "url": "git://github.com/overview/overview-grep.git"
   },
   "author": "Friedrich Lindenberg <friedrich@pudo.org>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pudo/overview-grep/issues"
+    "url": "https://github.com/overview/overview-grep/issues"
   },
-  "homepage": "https://github.com/pudo/overview-grep",
+  "homepage": "https://github.com/overview/overview-grep",
   "dependencies": {
     "express": "^4.12.3",
     "bower": "",

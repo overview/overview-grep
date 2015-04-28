@@ -39,3 +39,8 @@ assets: public/deps.js public/style.css
 
 watch:
 	watchr -e "watch('.*') { system 'make assets' }"
+
+upload:
+	aws s3 sync --acl public-read --delete public/ s3://overview.pudo.org/grep/
+	aws s3 cp --acl public-read --content-type 'text/html' public/show s3://overview.pudo.org/grep/
+	aws s3 cp --acl public-read --content-type 'application/json' public/metadata s3://overview.pudo.org/grep/

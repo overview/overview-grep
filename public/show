@@ -19,9 +19,6 @@
       <div class="alert alert-warning" ng-show="query.message">
         {{query.message}}
       </div>
-      <div ng-repeat="url in regexUrl">
-        <iframe frameborder="0" width="100%" height="250" ng-src="{{url}}"></iframe>
-      </div>
     </div>
     <script src="script.js"></script>
   </body>

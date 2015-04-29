@@ -10,13 +10,11 @@ grep.controller('AppCtrl', ['$scope', '$location', '$http', '$sce',
     function ($scope, $location, $http, $sce) {
   var config = $location.search();
   $scope.query = {regex: null, running: false, message: null};
-  $scope.regexUrl = null;
 
   $scope.run = function() {
     if (!$scope.canSearch()) return;
     $scope.query.running = true;
     $scope.query.message = null;
-    $scope.regexUrl = [$sce.trustAsResourceUrl('http://jex.im/regulex/#!embed=true&flags=&re=' + encodeURIComponent($scope.query.regex))];
 
     var params = angular.copy(config);
     params['regex'] = $scope.query.regex;
@@ -34,7 +32,7 @@ grep.controller('AppCtrl', ['$scope', '$location', '$http', '$sce',
 
       window.parent.postMessage({
         call: 'setDocumentListParams',
-        args: [{q: matches.join(' OR ')}]
+        args: [{q: matches.join(' OR '), title: '%s in regex ' + $scope.query.regex}]
       }, config.server);
     });
   };

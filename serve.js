@@ -19,9 +19,9 @@ app.get('/parse', function(req, res, next) {
     regex = new RegExp(req.query.regex),
     matches = [];
 
-  client.docSet(req.query.documentSetId).getDocuments()
+  client.docSet(req.query.documentSetId).getDocuments(["id", "title", "text"])
     .node('items.*', function(item) {
-      if (regex.test(item.text)) {
+      if (regex.test(item.title) || regex.test(item.text)) {
         matches.push(item.id);
       }
       return oboe.drop;

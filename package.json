@@ -16,10 +16,11 @@
   },
   "homepage": "https://github.com/overview/overview-grep",
   "dependencies": {
-    "express": "^4.12.3",
     "bower": "",
+    "express": "^4.12.3",
     "less": "",
-    "uglifyjs": "",
-    "oboe": ""
+    "oboe": "",
+    "overview-api-node": "^2.0.1",
+    "uglifyjs": ""
   }
 }

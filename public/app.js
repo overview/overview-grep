@@ -20,19 +20,14 @@ grep.controller('AppCtrl', ['$scope', '$location', '$http', '$sce',
     params['regex'] = $scope.query.regex;
 
     $http.get('/parse', {params: params}).then(function(res) {
-      var matches = [];
-      for (var i in res.data.matches) {
-        matches.push('id:' + res.data.matches[i]);
-      }
-
       $scope.query.running = false;
-      if (matches.length == 0) {
-        $scope.query.message = 'No results were found.';
+      if (res.data.data.errors) {
+        $scope.query.message = 'An unknown error occured.';
       }
 
       window.parent.postMessage({
         call: 'setDocumentListParams',
-        args: [{q: matches.join(' OR '), title: '%s in regex ' + $scope.query.regex}]
+        args: [{objects: [res.data.data.attributes.resultsId], title: '%s matching regex ' + $scope.query.regex}]
       }, config.server);
     });
   };

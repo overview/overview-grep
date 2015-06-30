@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/overview/overview-grep",
   "dependencies": {
+    "bluebird": "^2.9.30",
     "bower": "",
     "express": "^4.12.3",
     "less": "",

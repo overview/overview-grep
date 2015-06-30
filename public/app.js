@@ -13,6 +13,16 @@ grep.controller('AppCtrl', ['$scope', '$location', '$http', '$sce',
 
   $scope.run = function() {
     if (!$scope.canSearch()) return;
+
+    // Allow user to enter an empty search to reset doc list
+    if($scope.query.regex.trim().length == 0) {
+      window.parent.postMessage({
+        call: 'setDocumentListParams',
+        args: [{}]
+      }, config.server);
+      return;
+    }
+
     $scope.query.running = true;
     $scope.query.message = null;
 
@@ -33,14 +43,11 @@ grep.controller('AppCtrl', ['$scope', '$location', '$http', '$sce',
   };
 
   $scope.canSearch = function() {
-    return $scope.validRegex() && !$scope.query.running;
+    return $scope.validSearch() && !$scope.query.running;
   }
 
-  $scope.validRegex = function() {
+  $scope.validSearch = function() {
     var rex = $scope.query.regex;
-    if (!rex || rex.trim().length == 0) {
-      return false;
-    }
     try {
       new RegExp(rex);
       return true;

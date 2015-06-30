@@ -17,8 +17,10 @@ app.use(function(req, res, next) {
 app.use(express.static('public'));
 
 app.get('/parse', function(req, res, next) {
+  var postPromise = Promise.promisify(request.post);
   var client = new API(req.query.server, req.query.apiToken, oboe);
   var regex = new RegExp(req.query.regex);
+  var matches = [];
 
   // Each StoreObject represents a query. That StoreObject is linked
   // to the Documents the query matches using DocumentStoreObjects.
@@ -49,57 +51,61 @@ app.get('/parse', function(req, res, next) {
       .fail(reject);
   });
 
-  // Once we find/create the id for the StoreObject that'll hold the results,
+  // While we're looking for/creating the StoreObject that'll hold the results,
   // we start downloading the documents and checking them each against the regex.
-  // As we find matches, we store them in a string that'll be sent to Overview
-  // to create all our DocumentStoreObject objects. We get the StoreObject's id
-  // first because we need it to build the request string. (If we didn't do this,
-  // we'd have to either use more memory or do some unnecessarily fancy footwork.)
-  storeObjectIdForQueryPromise.then(function(id) {
-    var matchesString = '[';
+  // As we find matches, we store them in a matches array that we'll split at
+  // the end and send to Overview in chunks (to work around Play's upload limit)
+  // to create all our DocumentStoreObject objects.
+  client.docSet(req.query.documentSetId).getDocuments(["id", "title", "text"])
+    .node('items.*', function(item) {
+      if (regex.test(item.title) || regex.test(item.text)) {
+        matches.push(item.id);
+      }
 
-    client.docSet(req.query.documentSetId).getDocuments(["id", "title", "text"])
-      .node('items.*', function(item) {
-        if (regex.test(item.title) || regex.test(item.text)) {
-          matchesString += '[' + item.id + ',' + id + '],';
+      return oboe.drop;
+    })
+    .done(function() {
+      storeObjectIdForQueryPromise.then(function(id) {
+        var matchSubsets = [];
+        while (matches.length > 0) {
+          matchSubsets.push(matches.splice(0,1000));
         }
-        return oboe.drop;
-      })
-      .done(function() {
-        matchesString = matchesString.slice(0, - 1)  + ']';
 
-        // Store the matches
-        console.log(client.host + '/api/v1/store/document-objects')
-        request.post({
-          url: client.host + '/api/v1/store/document-objects',
-          headers: {
-            "content-type": "application/json",
-            "Authorization": 'Basic ' + client.apiTokenEncoded
-          },
-          body: matchesString
-        }, function(err, response) {
-          // If saving the matches failed for some reason, let client know.
-          // (But, for now, don't retry.)
-          if(err) {
-            res.json({
-              errors: [{
-                code: "unknown-error"
-              }]
-            });
-          }
-          else {
-            // Only after matches are actually saved, respond to client.
-            res.json({
-              data: {
-                id: req.query.regex,
-                type: "grep-results",
-                attributes: { resultsId: id }
-              }
-            });
-          }
+        Promise.map(matchSubsets, function(someMatches) {
+          var matchesString = '[' + someMatches.map(function(it) {
+            return '[' + it + ',' + id + ']'; // add the store object id too
+          }).join(',') + ']';
+
+          return postPromise({
+            url: client.host + '/api/v1/store/document-objects',
+            headers: {
+              "content-type": "application/json",
+              "Authorization": 'Basic ' + client.apiTokenEncoded
+            },
+            body: matchesString
+          });
+        })
+        // We've save all matches successfully, so now we can finally respond.
+        .then(function(results) {
+          res.json({
+            data: {
+              id: req.query.regex,
+              type: "grep-results",
+              attributes: { resultsId: id }
+            }
+          });
+        })
+        .catch(function(err) {
+          console.log(err);
+          // If something went wrong, let client know. But, for now, don't retry.
+          res.json({
+            errors: [{
+              code: "unknown-error"
+            }]
+          });
         });
       });
-  });
+    });
 });
 
 var port = parseInt(process.env.PORT, 10) || 9001;

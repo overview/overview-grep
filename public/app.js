@@ -6,10 +6,11 @@ grep.config(['$locationProvider', function($locationProvider) {
 }]);
 
 
-grep.controller('AppCtrl', ['$scope', '$location', '$http', '$sce',
-    function ($scope, $location, $http, $sce) {
+grep.controller('AppCtrl', ['$scope', '$location', '$http', '$sce', '$timeout',
+    function ($scope, $location, $http, $sce, $timeout) {
   var config = $location.search();
-  $scope.query = {regex: null, running: false, message: null};
+  $scope.query = {regex: null, caseInsensitive: false, running: false};
+  $scope.status = {message: null, type: null};
 
   $scope.run = function() {
     if (!$scope.canSearch()) return;
@@ -24,7 +25,17 @@ grep.controller('AppCtrl', ['$scope', '$location', '$http', '$sce',
     }
 
     $scope.query.running = true;
-    $scope.query.message = null;
+
+    // If the query's still running after 500ms,
+    // reassure the user that something's happening.
+    $timeout(function() {
+      if ($scope.query.running) {
+        $scope.status.type = 'alert-warning';
+        $scope.status.message = $sce.trustAsHtml(
+          "Search Results Loading&hellip;<br/><i>(This can take a while on large document sets.)</i>"
+        );
+      }
+    }, 600);
 
     var params = angular.copy(config);
     params['regex'] = $scope.query.regex;
@@ -32,13 +43,20 @@ grep.controller('AppCtrl', ['$scope', '$location', '$http', '$sce',
     $http.get('/parse', {params: params}).then(function(res) {
       $scope.query.running = false;
       if (res.data.data.errors) {
-        $scope.query.message = 'An unknown error occured.';
+        $scope.status.type = 'alert-danger';
+        $scope.status.message = $sce.trustAsHtml('An unknown error occured.');
       }
-
-      window.parent.postMessage({
-        call: 'setDocumentListParams',
-        args: [{objects: [res.data.data.attributes.resultsId], title: '%s matching regex ' + $scope.query.regex}]
-      }, config.server);
+      else {
+        $scope.status.type = null;
+        $scope.status.message = null;
+        window.parent.postMessage({
+          call: 'setDocumentListParams',
+          args: [{objects:
+            [res.data.data.attributes.resultsId],
+            title: '%s matching regex ' + $scope.query.regex
+          }]
+        }, config.server);
+      }
     });
   };
 

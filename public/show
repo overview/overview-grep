@@ -16,8 +16,8 @@
           ng-disabled="!canSearch()">Filter</button>
       </form>
       <hr>
-      <div class="alert alert-warning" ng-show="query.message">
-        {{query.message}}
+      <div class="alert" ng-show="status.message" ng-class="status.type">
+        <p ng-bind-html="status.message"></p>
       </div>
     </div>
     <script src="script.js"></script>

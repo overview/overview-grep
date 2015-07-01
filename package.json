@@ -23,5 +23,8 @@
     "oboe": "",
     "overview-api-node": "^2.0.1",
     "uglifyjs": ""
+  },
+  "devDependencies": {
+    "pm2": "^0.12.5"
   }
 }

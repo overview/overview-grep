@@ -24,14 +24,14 @@
           </div>
         </div>
       </form>
+      <div class="alert" ng-show="status.message" ng-class="status.type">
+        <p ng-bind-html="status.message"></p>
+      </div>
       <ul class="instructions">
         <li>Use <a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions' target='_parent'>JavaScript&rsquo;s syntax</a></li>
         <li>Don&rsquo;t enter delimiters (e.g. <code>/</code>) around your pattern</li>
         <li>Matches are always case-sensitive, that is, the <code>i</code> flag is not enabled.</li>
       </ul>
-      <div class="alert" ng-show="status.message" ng-class="status.type">
-        <p ng-bind-html="status.message"></p>
-      </div>
       </section>
       <section class="new">
         <h1 class="h5">New to Regular Expressions?</h1>

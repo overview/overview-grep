@@ -8,34 +8,35 @@
 
 // Core CSS
 @import "../bower_components/bootstrap/less/scaffolding.less";
-@import "../bower_components/bootstrap/less/type.less";
-// @import "../bower_components/bootstrap/less/code.less";
-@import "../bower_components/bootstrap/less/grid.less";
-@import "../bower_components/bootstrap/less/tables.less";
+@import "../bower_components/bootstrap/less/code.less";
 @import "../bower_components/bootstrap/less/forms.less";
 @import "../bower_components/bootstrap/less/buttons.less";
+@import "../bower_components/bootstrap/less/type.less";
+// @import "../bower_components/bootstrap/less/grid.less";
+// @import "../bower_components/bootstrap/less/tables.less";
 
 // Components
 @import "../bower_components/bootstrap/less/component-animations.less";
+@import "../bower_components/bootstrap/less/input-groups.less";
+@import "../bower_components/bootstrap/less/labels.less";
+@import "../bower_components/bootstrap/less/alerts.less";
+
 // @import "../bower_components/bootstrap/less/glyphicons.less";
 // @import "../bower_components/bootstrap/less/dropdowns.less";
 // @import "../bower_components/bootstrap/less/button-groups.less";
-// @import "../bower_components/bootstrap/less/input-groups.less";
 // @import "../bower_components/bootstrap/less/navs.less";
 // @import "../bower_components/bootstrap/less/navbar.less";
 // @import "../bower_components/bootstrap/less/breadcrumbs.less";
 // @import "../bower_components/bootstrap/less/pagination.less";
 // @import "../bower_components/bootstrap/less/pager.less";
-@import "../bower_components/bootstrap/less/labels.less";
 // @import "../bower_components/bootstrap/less/badges.less";
 // @import "../bower_components/bootstrap/less/jumbotron.less";
 // @import "../bower_components/bootstrap/less/thumbnails.less";
-@import "../bower_components/bootstrap/less/alerts.less";
 // @import "../bower_components/bootstrap/less/progress-bars.less";
 // @import "../bower_components/bootstrap/less/media.less";
 // @import "../bower_components/bootstrap/less/list-group.less";
 // @import "../bower_components/bootstrap/less/panels.less";
-@import "../bower_components/bootstrap/less/popovers.less";
+// @import "../bower_components/bootstrap/less/popovers.less";
 // @import "../bower_components/bootstrap/less/wells.less";
 // @import "../bower_components/bootstrap/less/close.less";
 
@@ -43,50 +44,60 @@
 @import "../bower_components/bootstrap/less/utilities.less";
 @import "../bower_components/bootstrap/less/responsive-utilities.less";
 
+// Element styles + overrides
+h4, .h4 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+ul {
+  padding: 0;
+  padding-left: 1.25em;
+}
+
+section {
+  margin-top: 20px;
+}
+
+li {
+  text-indent: -.25em;
+  padding-bottom: .5em;
+  padding-left: 0;
+}
+
+.form-group {
+  margin: 0;
+  padding: 10px 0;
+}
+
+.instructions {
+  padding-top: 10px;
+}
+
 // Angular ugliness fix
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
 
-// Special overrides for "?" popover
-.input-group {
-  position: relative;
-}
-
-.input-group .form-control:not(:first-child):not(:last-child) {
-  border-radius: 4px;
-}
-
-.input-group-addon {
-  position: absolute;
-  right: 2px;
-  z-index: 2;
-  border: 0;
-  top: 3px;
-  bottom: 3px;
-  background-color: transparent;
-  padding-right: 6px;
-}
-
-#help {
-  border-radius: 50%;
-  background-color: #aaa;
-  font-weight: bold;
-  width: 18px;
-  height: 18px;
-  display: block;
-  margin-top: 5px;
-  text-align: center;
-  font-size: .9em;
-  padding-top: 1px;
-  color: white;
-}
-
-.popover {
-  min-width: 18em;
-}
-
 .container-fluid {
-  margin: 1em 0 0 0;
+  margin: 0 1.25em;
   padding: 0;
 }
+
+.new {
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 1em;
+
+  :last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  :first-child {
+    padding-top: 0;
+    margin-top: 0;
+  }
+}
+

@@ -9,8 +9,23 @@
     <div id="page" class="container-fluid" ng-controller="AppCtrl" ng-cloak>
       <form class="form-inline" ng-submit="run()">
         <div class="form-group col-xs-8">
-          <input type="text" class="form-control" ng-model="query.regex"
-            placeholder="bb|[^b]{2}" ng-readonly="query.running">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control ng-pristine ng-valid"
+              ng-model="query.regex"
+              placeholder="Enter a regular expression, like bb|[^b]{2}"
+              ng-readonly="query.running" />
+            <div class="input-group-addon">
+              <span
+                id="help"
+                data-toggle="popover"
+                data-html="true"
+                data-placement="bottom"
+                data-content="<p>Regular expressions use <a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions'>JavaScript&rsquo;s syntax</a> and are always case-sensitive, that is, the <code>i</code> flag is not enabled. You should not enter delimiters (e.g. <code>/</code>) around your pattern.</p><p>If you&rsquo;re new to regular expressions, check out this <a href='http://regexr.com/'>learning resource</a>.</p>">?
+              </span>
+            </div>
+          </div>
         </div>
         <button type="submit" class="btn btn-default"
           ng-disabled="!canSearch()">Filter</button>
@@ -21,5 +36,10 @@
       </div>
     </div>
     <script src="script.js"></script>
+    <script>
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    });
+    </script>
   </body>
 </html>

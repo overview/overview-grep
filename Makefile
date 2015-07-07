@@ -25,6 +25,8 @@ clean-deps:
 
 public/script.js: bower_components
 	$(UGLIFY) \
+		$(BC)/jquery/dist/jquery.min.js \
+		$(BC)/bootstrap/dist/js/bootstrap.min.js \
 		$(BC)/angular/angular.js \
 		public/app.js \
 		-o public/script.js

@@ -22,7 +22,7 @@
                 data-toggle="popover"
                 data-html="true"
                 data-placement="bottom"
-                data-content="<p>Regular expressions use <a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions'>JavaScript&rsquo;s syntax</a> and are always case-sensitive, that is, the <code>i</code> flag is not enabled. You should not enter delimiters (e.g. <code>/</code>) around your pattern.</p><p>If you&rsquo;re new to regular expressions, check out this <a href='http://regexr.com/'>learning resource</a>.</p>">?
+                data-content="<p>Regular expressions use <a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions' target='_parent'>JavaScript&rsquo;s syntax</a> and are always case-sensitive, that is, the <code>i</code> flag is not enabled. You should not enter delimiters (e.g. <code>/</code>) around your pattern.</p><p>If you&rsquo;re new to regular expressions, check out this <a href='http://regexr.com/' target='_parent'>learning resource</a>.</p>">?
               </span>
             </div>
           </div>

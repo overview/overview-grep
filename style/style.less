@@ -74,11 +74,6 @@ li {
   padding-top: 10px;
 }
 
-// Angular ugliness fix
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
-}
-
 .container-fluid {
   margin: 0 1.25em;
   padding: 0;
@@ -101,3 +96,21 @@ li {
   }
 }
 
+// Angular ugliness fix
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+// Bootstrap fixes for making the input span
+// full width on > 768px viewports
+.form-inline .input-group {
+  width: 100%;
+
+  .form-control {
+    width: 100%;
+  }
+
+  .input-group-btn {
+    width: 1%;
+  }
+}

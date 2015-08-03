@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Grep documents within an Overview document set",
   "scripts": {
-    "start": "node serve.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -17,14 +17,14 @@
   "homepage": "https://github.com/overview/overview-grep",
   "dependencies": {
     "bluebird": "^2.9.30",
-    "bower": "",
     "express": "^4.12.3",
-    "less": "",
     "oboe": "",
     "overview-api-node": "^2.0.1",
-    "uglifyjs": ""
+    "request": "^2.60.0"
   },
   "devDependencies": {
-    "pm2": "^0.12.5"
+    "bower": "",
+    "less": "",
+    "uglifyjs": ""
   }
 }

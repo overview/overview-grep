@@ -108,7 +108,7 @@ app.get('/parse', function(req, res, next) {
     });
 });
 
-var port = parseInt(process.env.PORT, 10) || 9001;
+var port = parseInt(process.env.PORT, 10) || 3000;
 app.listen(port);
 
 console.log("Listening on http://localhost:" + port);

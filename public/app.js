@@ -51,10 +51,10 @@ grep.controller('AppCtrl', ['$scope', '$location', '$http', '$sce', '$timeout',
         $scope.status.message = null;
         window.parent.postMessage({
           call: 'setDocumentListParams',
-          args: [{objects:
-            [res.data.data.attributes.resultsId],
+          args: [{objects: {
+            ids: [res.data.data.attributes.resultsId],
             title: '%s matching regex ' + $scope.query.regex
-          }]
+          }}]
         }, config.server);
       }
     });

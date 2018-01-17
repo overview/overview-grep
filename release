@@ -1,0 +1,23 @@
+#!/bin/bash
+
+DIR="$(dirname "$0")"
+
+if (cd "$DIR" && git status --short | grep -E '.'); then
+  echo "You have unsaved changes. Please git commit or reset them and run this again." >&2
+  exit 1
+fi
+
+if [ -n "$(echo "v$1" | sed -e 's/v[0-9]*\.[0-9]*\.[0-9]//')" ]; then
+  echo "Usage: $0 VERSION, where VERSION is like '1.0.0'" >&2
+  exit 1
+fi
+
+PATCH_VERSION="$1"
+
+docker build "$DIR" # make sure it succeeds
+
+(cd "$DIR" \
+  && git tag "v$PATCH_VERSION" \
+  && git push origin "v$PATCH_VERSION"
+)
+# Now, Docker Hub's hook will notice the tag and build it
